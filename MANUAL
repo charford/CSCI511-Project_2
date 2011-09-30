@@ -1,0 +1,101 @@
+-------------------------------------------------------------------------------\
+SiteDeveloper                                                 By Casey Harford
+-------------------------------------------------------------------------------
+SiteDeveloper can be used to create a virtual world with buildings, sidewalks, 
+roads, and many other objects(see full list below).
+
+-------------------------------------------------------------------------------\
+Requirements
+-------------------------------------------------------------------------------
+To run, you'll require the Java Runtime Environment, version 1.6 or greater, 
+may work on old versions as well, but untested.
+
+To compile, you'll require the Java Development Kit, version 1.6 or greater,
+may work on old versions as well, but untested.
+
+Both are available @  http://www.oracle.com
+
+-------------------------------------------------------------------------------\
+How to compile
+-------------------------------------------------------------------------------
+Navigate to the root of the project directory. Enter the following command:
+
+  javac src/*.java -d bin/
+
+-------------------------------------------------------------------------------\
+How to use it
+-------------------------------------------------------------------------------
+create tree loc 3 4 color green
+
+The above command would create a tree at location x = 3, y = 4.
+
+p - prints the buildspace, along with current objects
+q - quits the program
+
+Multiple commands can be given, here are the list of available objects:
+- tree
+- bench
+- building
+- sidewalk
+- road
+- house
+
+Colors have not been configured yet, but will be implemented in the color,
+graphical version coming soon. For now, just put in a valid "string" such
+blue, or green, or yellow, or if you like, red.
+
+-------------------------------------------------------------------------------\
+Test Input/Output
+-------------------------------------------------------------------------------
+To see some sample input/ouput, run the following commands, while in the 
+bin/ directory
+
+Example of good input:
+java SiteDeveloper < ../test_input
+
+Outputs: 
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * 
+* T R R T   B B B B   B B B B   B B B B   R R       *
+*   R R     B B B B   B B B B   B B B B   R R   H H *
+* T R R T   B B B B   B B B B   B B B B   R R   H H *
+*   R R     B B B B   B B B B   B B B B   R R       *
+* T R R T                                 R R   H H *
+*   R R     B B B B   B B B B   B B B B   R R   H H *
+* T R R T   B B B B   B B B B   B B B B   R R       *
+*   R R     B B B B   B B B B   B B B B   R R   H H *
+* T R R T   B B B B   B B B B   B B B B T R R   H H *
+*   R R   T                           T   R R       *
+* T R R R R R R R R R R R R R R R R R R R R R R R R *
+*   R R R R R R R R R R R R R R R R R R R R R R R R *
+* T                 R R                             *
+*         B B B B   R R   H H   H H   H H   H H T T *
+*         B B B B   R R   H H   H H   H H   H H T T *
+*         B B B B   R R                             *
+*         B B B B   R R     H H   H H   H H   H H   *
+*                   R R     H H   H H   H H   H H   *
+*         B B B B   R R                             *
+*         B B B B   R R R R R R R R R R R R R R R R *
+*         B B B B   R R R R R R R R R R R R R R R R *
+*         B B B B   R R                             *
+*                   R R     H H   H H   H H   H H   *
+*                   R R     H H   H H   H H   H H   *
+*                 T T T T                           *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+Example of bad input:
+java SiteDeveloper < ../test_bad_input
+
+Outputs:
+
+Error, invalid argument for loc
+Invalid object specified
+Error, invalid command(expecting color)
+Error, outside of buildSpace 50, 50
+Error, outside of buildSpace 50, 10
+Error, outside of buildSpace 10, 50
+
+-------------------------------------------------------------------------------\
+UML Diagram
+-------------------------------------------------------------------------------
+Please see UML.png for the UML diagram of SiteDeveloper.

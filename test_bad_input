@@ -1,0 +1,6 @@
+create tree location 5 5 color green
+create structure loc 4 4 color blue
+create bench loc 4 4 col blue
+create bench loc 50 50 color blue
+create bench loc 50 10 color blue
+create bench loc 10 50 color blue
