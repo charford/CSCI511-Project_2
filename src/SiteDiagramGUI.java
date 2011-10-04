@@ -1,8 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 class SiteDiagramGUI extends JPanel {
+  
+  public SiteDiagramGUI() {
+    addMouseListener(new MouseAdapter() {
+      public void mousePressed(MouseEvent e) {
+        System.out.println("mouse pressed");
+      }
+      public void mouseClicked(MouseEvent e) {
+        
+        System.out.println("mouse pressed " + e.getX() + ", " + e.getY());
+        int x = e.getX() / cellSize;
+        int y = e.getY() / cellSize;
+        System.out.println("mouse pressed " + x + ", " + y);
+      }
+    
+    });
+  }
+
   private static int fWidth,fHeight,cellSize;
+
   public void paintComponent(Graphics g) {
     System.out.println("start printComponent");
   
@@ -30,6 +50,7 @@ class SiteDiagramGUI extends JPanel {
     f.add(new SiteDiagramGUI());
     f.setSize(fWidth*cellSize,fHeight*cellSize);
     f.setVisible(true);
+    
 
     JFrame t = new JFrame();
     t.setSize(100,500);
