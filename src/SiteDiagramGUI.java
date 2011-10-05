@@ -8,14 +8,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 class SiteDiagramGUI extends JPanel implements ActionListener {
-  String create;
+  private static String create;
   private JButton treeButton = new JButton("Tree");
   private JButton sidewalkButton = new JButton("Sidewalk");
   private JButton buildingButton = new JButton("Building");
   private JButton houseButton = new JButton("House");
-  private JButton roadButton = new JButton("road");
-  private JButton benchButton = new JButton("bench");
+  private JButton roadButton = new JButton("Road");
+  private JButton benchButton = new JButton("Bench");
   private static int fWidth,fHeight,cellSize;
+  private static SiteElement buildObject;
   
   public SiteDiagramGUI() {
     add(treeButton);
@@ -50,6 +51,8 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
         int x = e.getX() / cellSize;
         int y = e.getY() / cellSize;
         System.out.println("mouse clicked " + x + ", " + y + "object to create = " + create);
+        System.out.println("create = " + create);
+        buildObject.createObject(create,x,y,"blue");
       }
     });
   }
@@ -59,11 +62,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     if(source == treeButton) {
       System.out.println("tree button pressed");
       create = "tree";
-      System.out.println("create = " + create);
-    }
-    if(source == sidewalkButton) {
-      System.out.println("sidewalk button pressed");
-      create = "sidewalk";
       System.out.println("create = " + create);
     }
   }
@@ -87,8 +85,10 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   } 
 
   public static void main (String [] args) {
+    create = "undefined";
     fWidth = 18;
     fHeight = 18;
+    buildObject = new SiteElement();
     cellSize = 35;
     System.out.println("SiteDiagramGUI");
     JFrame f = new JFrame();
@@ -96,9 +96,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     f.setSize(fWidth*cellSize,(fHeight*cellSize));
     f.setVisible(true);
     
-    //JFrame t = new JFrame();
-    //t.setSize(100,500);
-    //t.setVisible(true);
   }
  
 };

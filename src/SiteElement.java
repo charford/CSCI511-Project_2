@@ -10,13 +10,15 @@ public class SiteElement {
   int buildSpace[][];
   static int buildSizes[];
   static String buildObjects[];
-  int size_x = 25;
-  int size_y = 25;
+  int size_x;
+  int size_y;
 
   /**
    *  constructor for SiteElement
   */
   public SiteElement () {
+    size_x = 18;
+    size_y = 18;
     /**
      *  Creating the build space. Size is based on parameters given
     */
@@ -42,6 +44,8 @@ public class SiteElement {
       buildSizes[5] = 4;
       buildSizes[6] = 1;
   }
+    
+    
   
    /**
     * method for createObject
