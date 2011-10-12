@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 class SiteDiagramGUI extends JPanel implements ActionListener {
+  public static JFrame f;
   private static String create;
   private JButton treeButton = new JButton("Tree");
   private JButton sidewalkButton = new JButton("Sidewalk");
@@ -17,6 +18,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton benchButton = new JButton("Bench");
   private static int fWidth,fHeight,cellSize;
   private static SiteElement buildObject;
+
   
   public SiteDiagramGUI() {
     add(treeButton);
@@ -64,6 +66,31 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       create = "tree";
       System.out.println("create = " + create);
     }
+    else if(source == sidewalkButton) {
+      System.out.println("sidewalk button pressed");
+      create = "sidewalk";
+    }
+    else if(source == buildingButton) {
+      System.out.println("building button pressed");
+      create = "building";
+      
+
+    }
+    if(source == houseButton) {
+      System.out.println("house button pressed");
+      create = "house";
+      Graphics g = f.getGraphics();
+      g.drawLine(0,0,10,10);
+      g.dispose();
+    }
+    if(source == roadButton) {
+      System.out.println("road button pressed");
+      create = "road";
+    }
+    if(source == benchButton) {
+      System.out.println("bench button pressed");
+      create = "bench";
+    }
   }
 
   public void paintComponent(Graphics g) {
@@ -71,6 +98,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   
     int y=cellSize;
     while(y<=fHeight*cellSize) {
+      g.setColor(Color.gray);
       g.drawLine(0,y,fWidth*cellSize,y);
       y += cellSize;
     }
@@ -91,7 +119,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     buildObject = new SiteElement();
     cellSize = 35;
     System.out.println("SiteDiagramGUI");
-    JFrame f = new JFrame();
+    f = new JFrame("SiteDiagramGUI");
     f.add(new SiteDiagramGUI());
     f.setSize(fWidth*cellSize,(fHeight*cellSize));
     f.setVisible(true);
