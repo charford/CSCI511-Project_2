@@ -60,9 +60,17 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
         int y = e.getY() / cellSize;
         System.out.println("mouse clicked " + x + ", " + y + "object to create = " + create);
         System.out.println("create = " + create);
-        buildObject.createObject(create,x,y,"blue");
-        
-        
+        if(buildObject.createObject(create,x,y,"blue")) {
+          Graphics g = getGraphics();
+          if(create.equalsIgnoreCase("road")) {
+            g.setColor(Color.black);
+            g.drawOval(x*cellSize,y*cellSize,cellSize,cellSize);
+            System.out.println("paint road");
+          }
+          //g.setColor(Color.black);
+          //g.drawOval(x*cellSize,y*cellSize,100,100);
+        }
+        else System.out.println("error paint");
       }
     });
   }

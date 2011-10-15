@@ -39,7 +39,7 @@ public class SiteElement {
       buildSizes[0] = 0;
       buildSizes[1] = 1;
       buildSizes[2] = 1;
-      buildSizes[3] = 2;
+      buildSizes[3] = 1;  //road
       buildSizes[4] = 2;
       buildSizes[5] = 4;
       buildSizes[6] = 1;
@@ -54,40 +54,48 @@ public class SiteElement {
     * @param loc_y  gets the y coordinate to place object
     * @param color  gets the color to be used for the object 
    */
-  public void createObject(String type,int loc_x,int loc_y,String color) {
+  public boolean createObject(String type,int loc_x,int loc_y,String color) {
     if(type.equalsIgnoreCase("tree")) {
       if(trackObjects(1,loc_x,loc_y,color)) {
         ElementTree.cloneMe(loc_x,loc_y,color);
+        return true;
       }
     }
     else if(type.equalsIgnoreCase("bench")) {
       if(trackObjects(2,loc_x,loc_y,color)) {
         ElementBench.cloneMe(loc_x,loc_y,color);
+        return true;
       }
     }
     else if(type.equalsIgnoreCase("road")) {
       if(trackObjects(3,loc_x,loc_y,color)) {
         ElementRoad.cloneMe(loc_x,loc_y,color);
+        return true;
       }
     }
     else if(type.equalsIgnoreCase("house")) {
       if(trackObjects(4,loc_x,loc_y,color)) {
         ElementHouse.cloneMe(loc_x,loc_y,color);
+        return true;
       }
     }
     else if(type.equalsIgnoreCase("building")) {
       if(trackObjects(5,loc_x,loc_y,color)) {
         ElementBuilding.cloneMe(loc_x,loc_y,color);
+        return true;
       }
     }
     else if(type.equalsIgnoreCase("sidewalk")) {
       if(trackObjects(6,loc_x,loc_y,color)) {
         ElementSidewalk.cloneMe(loc_x,loc_y,color);
+        return true;
       }
     }
     else {
       System.out.println("Invalid object specified");
+      return false;
     }
+    return false;
   }
   
   /**
