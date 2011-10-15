@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.geom.Rectangle2D;
 
 class SiteDiagramGUI extends JPanel implements ActionListener {
   public static JFrame f;
@@ -62,9 +63,13 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
         System.out.println("create = " + create);
         if(buildObject.createObject(create,x,y,"blue")) {
           Graphics g = getGraphics();
+          Graphics2D g2 = (Graphics2D) g;
           if(create.equalsIgnoreCase("road")) {
-            g.setColor(Color.black);
-            g.drawOval(x*cellSize,y*cellSize,cellSize,cellSize);
+            g2.setPaint(Color.gray);
+            g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize, cellSize));
+            //g2.fill(new Rectangle2D(x*cellSize,y*cellSize,cellSize,cellSize));
+            //g.drawOval(x*cellSize,y*cellSize,cellSize,cellSize);
+            //g.fill(g.drawRect(x*cellSize,y*cellSize,cellSize,cellSize));
             System.out.println("paint road");
           }
           //g.setColor(Color.black);
