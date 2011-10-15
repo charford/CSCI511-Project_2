@@ -20,8 +20,9 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton benchButton = new JButton("Bench");
   private static int fWidth,fHeight,cellSize;
   private static SiteElement buildObject;
-  BufferedImage image;
-
+  private static BufferedImage image;
+  
+  
   
   public SiteDiagramGUI() {
     add(treeButton);
@@ -36,6 +37,8 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     houseButton.addActionListener(this);
     roadButton.addActionListener(this);
     benchButton.addActionListener(this);
+    
+    
     
     /************************************************
     /*addWindowListener(
@@ -58,6 +61,8 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
         System.out.println("mouse clicked " + x + ", " + y + "object to create = " + create);
         System.out.println("create = " + create);
         buildObject.createObject(create,x,y,"blue");
+        
+        
       }
     });
   }
