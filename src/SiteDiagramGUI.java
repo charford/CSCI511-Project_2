@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.*;
+import java.util.*;
 import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.WindowAdapter;
@@ -18,6 +20,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton benchButton = new JButton("Bench");
   private static int fWidth,fHeight,cellSize;
   private static SiteElement buildObject;
+  BufferedImage image;
 
   
   public SiteDiagramGUI() {
