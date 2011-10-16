@@ -1,4 +1,5 @@
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.awt.*;
 /**
   * class for SiteElement
   * @author Casey Harford
@@ -73,41 +74,46 @@ public class SiteElement {
     * @param loc_y  gets the y coordinate to place object
     * @param color  gets the color to be used for the object 
    */
-  public boolean createObject(String type,int loc_x,int loc_y,String color) {
+  public boolean createObject(String type,int loc_x,int loc_y,Color color) {
     if(type.equalsIgnoreCase("tree")) {
       if(trackObjects(1,loc_x,loc_y,color)) {
-        ElementTree.cloneMe(loc_x,loc_y,color);
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y));
+        //ElementTree.cloneMe(loc_x,loc_y,color);
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("bench")) {
       if(trackObjects(2,loc_x,loc_y,color)) {
-        ElementBench.cloneMe(loc_x,loc_y,color);
+        //ElementBench.cloneMe(loc_x,loc_y,color);
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("road")) {
       if(trackObjects(3,loc_x,loc_y,color)) {
-        ElementRoad.cloneMe(loc_x,loc_y,color);
+        //ElementRoad.cloneMe(loc_x,loc_y,color);
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("house")) {
       if(trackObjects(4,loc_x,loc_y,color)) {
-        ElementHouse.cloneMe(loc_x,loc_y,color);
+        //ElementHouse.cloneMe(loc_x,loc_y,color);
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("building")) {
       if(trackObjects(5,loc_x,loc_y,color)) {
-        ElementBuilding.cloneMe(loc_x,loc_y,color);
+        //ElementBuilding.cloneMe(loc_x,loc_y,color);
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("sidewalk")) {
       if(trackObjects(6,loc_x,loc_y,color)) {
-        ElementSidewalk.cloneMe(loc_x,loc_y,color);
+        //ElementSidewalk.cloneMe(loc_x,loc_y,color);
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
@@ -165,7 +171,7 @@ public class SiteElement {
   /**
    *  method for trackObjects, used to track objects in the buildSpace
   */
-  private boolean trackObjects(int type,int loc_x,int loc_y,String color) {
+  private boolean trackObjects(int type,int loc_x,int loc_y,Color color) {
     int create_size_x = buildSizes_x[type];
     int create_size_y = buildSizes_y[type];
     boolean spaceAvailable = true;
@@ -202,9 +208,11 @@ public class SiteElement {
     private String create;
     private int x;
     private int y;
+    private Color color;
   
-    alreadyBuilt(String createThis,int x_cord,int y_cord) {
+    alreadyBuilt(String createThis,int x_cord,int y_cord, Color colorThis) {
       create = createThis;
+      color = colorThis;
       x = x_cord;
       y = y_cord;
       System.out.println("added " + create + "at " + x + ", " + y + " to <builtAlready>");
@@ -217,6 +225,9 @@ public class SiteElement {
     }
     public String getType() {
       return create;
+    }
+    public Color getColor() {
+      return color;
     }
   };
 };

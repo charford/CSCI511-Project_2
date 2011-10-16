@@ -64,39 +64,26 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
         int y = e.getY() / cellSize;
         System.out.println("mouse clicked " + x + ", " + y + "object to create = " + create);
         System.out.println("create = " + create);
-        if(buildObject.createObject(create,x,y,"blue")) {
+        if(buildObject.createObject(create,x,y,curColor)) {
           Graphics g = getGraphics();
           Graphics2D g2 = (Graphics2D) g;
           if(create.equalsIgnoreCase("road")) {
-            g2.setPaint(Color.gray);
-            g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize, cellSize));
-            System.out.println("paint road");
+            repaint();
           }
           else if(create.equalsIgnoreCase("tree")) {
-            Color brown = new Color(156,93,82);
-            System.out.println(curColor);
-            g2.setPaint(brown);
-            g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/4), (y*cellSize)+(cellSize/4), cellSize/2, cellSize/2));
-            //draw the leaves
-            g2.setPaint(Color.green);
-            g2.fill(new Ellipse2D.Double(x*cellSize, y*cellSize, cellSize/2, cellSize/2));
-            g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), y*cellSize, cellSize/2, cellSize/2));
-            g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
-            g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
-            
-            
+            repaint();
           }
           else if(create.equalsIgnoreCase("building")) {
             repaint();
-            g2.setPaint(curColor);
-            g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*2));
           }
           else if(create.equalsIgnoreCase("house")) {
-            g2.setPaint(curColor);
-            g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*2, cellSize*2));
-            g2.setPaint(Color.black);
-            g2.fill(new Line2D.Double(x*cellSize,y*cellSize, 100,100));
-            
+            repaint();
+          }
+          else if(create.equalsIgnoreCase("sidewalk")) {
+            repaint();
+          }
+          else if(create.equalsIgnoreCase("bench")) {
+            repaint();
           }
         }
         else System.out.println("error paint");
@@ -140,6 +127,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     if(source == colorButton) {
       curColor = JColorChooser.showDialog( SiteDiagramGUI.this, "Choose a color", curColor);
       System.out.println("Changed color to: " + curColor);
+      repaint();
     }
   }
 
@@ -182,6 +170,22 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
         g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), y*cellSize, cellSize/2, cellSize/2));
         g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
         g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
+      }
+      else if(object.getType().equalsIgnoreCase("building")) {
+        g2.setPaint(object.getColor());
+        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*2));
+      }
+      else if(object.getType().equalsIgnoreCase("house")) {
+        g2.setPaint(object.getColor());
+        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*2, cellSize*2));
+        g2.setPaint(Color.black);
+        //g2.fill(new Line2D.Double(x*cellSize,y*cellSize, 100,100));
+      }
+      else if(object.getType().equalsIgnoreCase("sidewalk")) {
+      
+      }
+      else if(object.getType().equalsIgnoreCase("bench")) {
+
       }
     }
   } 
