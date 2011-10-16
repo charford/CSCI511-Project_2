@@ -119,50 +119,6 @@ public class SiteElement {
   }
   
   /**
-   *  method for outputBuildSpace, used to output a textual representation of buildspace
-  */ 
-  public void outputBuildSpace() {
-    for(int i=0; i<=size_x+1; i++) {
-      System.out.print("* ");
-    }
-    System.out.print("\n");
-    for(int cord_y=0; cord_y<size_y; cord_y++) {
-      System.out.print("* ");
-      for(int cord_x=0; cord_x<size_x; cord_x++) {
-         if(buildSpace[cord_x][cord_y]==0) {
-           System.out.print("  ");
-         }
-         else {
-           switch(buildSpace[cord_x][cord_y]) {
-             case 1:
-               System.out.print("T ");
-             break;
-             case 2:
-               System.out.print("b ");
-             break;
-             case 3:
-               System.out.print("R ");
-             break;
-             case 4:
-               System.out.print("H ");
-             break;
-             case 5:
-               System.out.print("B ");
-             break;
-             case 6:
-               System.out.print("S ");
-             break;
-           }
-         }
-      }
-      System.out.print("*\n");
-    }
-    for(int i=0; i<=size_x+1; i++) {
-      System.out.print("* ");
-    }
-    System.out.print("\n");
-  }
-  /**
    *  method for trackObjects, used to track objects in the buildSpace
   */
   private boolean trackObjects(int type,int loc_x,int loc_y,Color color,int size) {
