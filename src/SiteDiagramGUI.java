@@ -12,6 +12,7 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
+import javax.swing.JColorChooser;
 
 class SiteDiagramGUI extends JPanel implements ActionListener {
   public static JFrame f;
@@ -23,13 +24,14 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton roadButton = new JButton("Road");
   private JButton benchButton = new JButton("Bench");
   private JButton clearButton = new JButton("Clear");
+  private JButton colorButton = new JButton("Color");
   private static int fWidth,fHeight,cellSize;
   private static SiteElement buildObject;
   private static BufferedImage image;
-  
-  
+  private Color curColor;
   
   public SiteDiagramGUI() {
+    curColor = Color.white;
     add(treeButton);
     add(sidewalkButton);
     add(buildingButton);
@@ -37,6 +39,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     add(roadButton);
     add(benchButton);
     add(clearButton);
+    add(colorButton);
     treeButton.addActionListener(this);
     sidewalkButton.addActionListener(this);
     buildingButton.addActionListener(this);
@@ -44,17 +47,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     roadButton.addActionListener(this);
     benchButton.addActionListener(this);
     clearButton.addActionListener(this);
-    
-    
-    
-    /************************************************
-    /*addWindowListener(
-      new WindowAdapter() { 
-        public void windowClosing( WindowEvent e ) {
-        }  
-      }
-    );**********************************************
-    */
+    colorButton.addActionListener(this);
     
     addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent e) {
@@ -77,7 +70,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
           }
           else if(create.equalsIgnoreCase("tree")) {
             Color brown = new Color(156,93,82);
-            //draw stump
+            System.out.println(curColor);
             g2.setPaint(brown);
             g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/4), (y*cellSize)+(cellSize/4), cellSize/2, cellSize/2));
             //draw the leaves
@@ -88,7 +81,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
             g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
           }
           else if(create.equalsIgnoreCase("building")) {
-            g2.setPaint(Color.red);
+            g2.setPaint(curColor);
             g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*2));
           }
           else if(create.equalsIgnoreCase("house")) {
@@ -106,7 +99,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     if(source == treeButton) {
       System.out.println("tree button pressed");
       create = "tree";
-      System.out.println("create = " + create);
     }
     else if(source == sidewalkButton) {
       System.out.println("sidewalk button pressed");
@@ -119,9 +111,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     if(source == houseButton) {
       System.out.println("house button pressed");
       create = "house";
-      Graphics g = f.getGraphics();
-      g.drawLine(0,0,10,10);
-      g.dispose();
     }
     if(source == roadButton) {
       System.out.println("road button pressed");
@@ -135,6 +124,10 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       System.out.println("clear button pressed");
       buildObject = new SiteElement();
       repaint();
+    }
+    if(source == colorButton) {
+      curColor = JColorChooser.showDialog( SiteDiagramGUI.this, "Choose a color", curColor);
+      System.out.println("Changed color to: " + curColor);
     }
   }
 
