@@ -16,7 +16,6 @@ import java.awt.geom.Line2D;
 import javax.swing.JColorChooser;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ListIterator;
 
 class SiteDiagramGUI extends JPanel implements ActionListener {
   public static JFrame f;
@@ -26,7 +25,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton buildingButton = new JButton("Building");
   private JButton houseButton = new JButton("House");
   private JButton roadButton = new JButton("Road");
-  private JButton benchButton = new JButton("Bench");
+  private JButton grassButton = new JButton("Grass");
   private JButton clearButton = new JButton("Clear");
   private JButton colorButton = new JButton("Color");
   private JButton smallButton = new JButton("S");
@@ -34,7 +33,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton largeButton = new JButton("L");
   private static int fWidth,fHeight,cellSize;
   private static SiteElement buildObject;
-  private static BufferedImage image;
   private Color curColor;
   private int[][] buildTracker;   //track the objects painted, and will be used to repaint objects
   private static ArrayList<SiteElement.alreadyBuilt> builtObjects;
@@ -49,7 +47,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     add(buildingButton);
     add(houseButton);
     add(roadButton);
-    add(benchButton);
+    add(grassButton);
     add(clearButton);
     add(colorButton);
     add(smallButton);
@@ -60,7 +58,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     buildingButton.addActionListener(this);
     houseButton.addActionListener(this);
     roadButton.addActionListener(this);
-    benchButton.addActionListener(this);
+    grassButton.addActionListener(this);
     clearButton.addActionListener(this);
     colorButton.addActionListener(this);
     smallButton.addActionListener(this);
@@ -91,7 +89,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
           else if(create.equalsIgnoreCase("water")) {
             repaint();
           }
-          else if(create.equalsIgnoreCase("bench")) {
+          else if(create.equalsIgnoreCase("grass")) {
             repaint();
           }
         }
@@ -124,13 +122,14 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       System.out.println("road button pressed");
       create = "road";
     }
-    if(source == benchButton) {
-      System.out.println("bench button pressed");
-      create = "bench";
+    if(source == grassButton) {
+      System.out.println("grass button pressed");
+      create = "grass"; 
     }
     if(source == clearButton) {
       System.out.println("clear button pressed");
-      buildObject = new SiteElement(fWidth,fHeight);
+      buildObject.clear();
+      builtObjects = buildObject.getList();
       repaint();
     }
     if(source == colorButton) {
@@ -195,19 +194,25 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       else if(object.getType().equalsIgnoreCase("building")) {
         g2.setPaint(object.getColor());
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize*3, objectSize*2));
+        g.setColor(Color.black);
+        g.drawRect(x*cellSize,y*cellSize,objectSize*3,objectSize*2);
+        g.drawRect((x*cellSize)+10,(y*cellSize)+10,(objectSize*3)-20,(objectSize*2)-20);
       }
       else if(object.getType().equalsIgnoreCase("house")) {
         g2.setPaint(object.getColor());
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize*2, objectSize*2));
-        g2.setPaint(Color.black);
-        //g2.fill(new Line2D.Double(x*cellSize,y*cellSize, 100,100));
+        g.setColor(Color.black);
+        //g.drawRect(x*cellSize,y*cellSize,objectSize*3,objectSize*2);
+        //chimney
+        g.drawRect((x*cellSize)+(objectSize/4),(y*cellSize)+(objectSize/4),(objectSize/4)*3,(objectSize/4)*3);
       }
       else if(object.getType().equalsIgnoreCase("water")) {
         g2.setPaint(Color.blue);
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize, objectSize));
       }
-      else if(object.getType().equalsIgnoreCase("bench")) {
-        
+      else if(object.getType().equalsIgnoreCase("grass")) {
+        g2.setPaint(new Color(0,153,0));
+        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize, objectSize));
       }
     }
   } 

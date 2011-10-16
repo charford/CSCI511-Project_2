@@ -34,7 +34,7 @@ public class SiteElement {
     buildObjects = new String[7];
       buildObjects[0] = "Empty";
       buildObjects[1] = "Tree";
-      buildObjects[2] = "Bench";
+      buildObjects[2] = "Grass";
       buildObjects[3] = "Road";
       buildObjects[4] = "House";
       buildObjects[5] = "Building";
@@ -47,8 +47,8 @@ public class SiteElement {
       buildSizes_x[1] = 1;  //tree
       buildSizes_y[1] = 1;  //tree
 
-      buildSizes_x[2] = 1;  //bench
-      buildSizes_y[2] = 1;  //bench
+      buildSizes_x[2] = 1;  //grass
+      buildSizes_y[2] = 1;  //grass
    
       buildSizes_x[3] = 1;  //road
       buildSizes_y[3] = 1;  //road
@@ -81,7 +81,7 @@ public class SiteElement {
         return true;
       }
     }
-    else if(type.equalsIgnoreCase("bench")) {
+    else if(type.equalsIgnoreCase("grass")) {
       if(trackObjects(2,loc_x,loc_y,color,size)) {
         builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
         return true;
@@ -153,7 +153,11 @@ public class SiteElement {
     }  
     return spaceAvailable;
   }
-  
+  public void clear() {
+    builtAlready = new ArrayList<alreadyBuilt>();
+    buildSpace = new int[size_x][size_y];
+    System.out.println("cleared build space");
+  }
   static class alreadyBuilt {
     private String create;
     private int x;
