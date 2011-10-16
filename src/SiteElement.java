@@ -38,29 +38,29 @@ public class SiteElement {
       buildObjects[3] = "Road";
       buildObjects[4] = "House";
       buildObjects[5] = "Building";
-      buildObjects[6] = "Sidwalk";
+      buildObjects[6] = "Water";
     buildSizes_x = new int[7];
     buildSizes_y = new int[7];
-      buildSizes_x[0] = 0;
-      buildSizes_y[0] = 0;
+      buildSizes_x[0] = 0;  //nothing
+      buildSizes_y[0] = 0;  //nothing
 
-      buildSizes_x[1] = 1;
-      buildSizes_y[1] = 1;
+      buildSizes_x[1] = 1;  //tree
+      buildSizes_y[1] = 1;  //tree
 
-      buildSizes_x[2] = 1;
-      buildSizes_y[2] = 1;
+      buildSizes_x[2] = 1;  //bench
+      buildSizes_y[2] = 1;  //bench
    
       buildSizes_x[3] = 1;  //road
       buildSizes_y[3] = 1;  //road
     
-      buildSizes_x[4] = 2;
-      buildSizes_y[4] = 2;
+      buildSizes_x[4] = 2;  //house
+      buildSizes_y[4] = 2;  //house
 
       buildSizes_x[5] = 3;  //building
       buildSizes_y[5] = 2;  //building
 
-      buildSizes_x[6] = 1;
-      buildSizes_y[6] = 1;
+      buildSizes_x[6] = 1;  //water
+      buildSizes_y[6] = 1;  //water
   }
     
   public ArrayList<alreadyBuilt> getList() {
@@ -77,42 +77,36 @@ public class SiteElement {
   public boolean createObject(String type,int loc_x,int loc_y,Color color) {
     if(type.equalsIgnoreCase("tree")) {
       if(trackObjects(1,loc_x,loc_y,color)) {
-        //ElementTree.cloneMe(loc_x,loc_y,color);
         builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("bench")) {
       if(trackObjects(2,loc_x,loc_y,color)) {
-        //ElementBench.cloneMe(loc_x,loc_y,color);
         builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("road")) {
       if(trackObjects(3,loc_x,loc_y,color)) {
-        //ElementRoad.cloneMe(loc_x,loc_y,color);
         builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("house")) {
       if(trackObjects(4,loc_x,loc_y,color)) {
-        //ElementHouse.cloneMe(loc_x,loc_y,color);
         builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("building")) {
       if(trackObjects(5,loc_x,loc_y,color)) {
-        //ElementBuilding.cloneMe(loc_x,loc_y,color);
         builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }
     }
-    else if(type.equalsIgnoreCase("sidewalk")) {
+    else if(type.equalsIgnoreCase("water")) {
       if(trackObjects(6,loc_x,loc_y,color)) {
-        //ElementSidewalk.cloneMe(loc_x,loc_y,color);
         builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
         return true;
       }

@@ -22,7 +22,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   public static JFrame f;
   private static String create;
   private JButton treeButton = new JButton("Tree");
-  private JButton sidewalkButton = new JButton("Sidewalk");
+  private JButton waterButton = new JButton("Water");
   private JButton buildingButton = new JButton("Building");
   private JButton houseButton = new JButton("House");
   private JButton roadButton = new JButton("Road");
@@ -40,7 +40,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     buildTracker = new int[7][4];
     curColor = Color.white;
     add(treeButton);
-    add(sidewalkButton);
+    add(waterButton);
     add(buildingButton);
     add(houseButton);
     add(roadButton);
@@ -48,7 +48,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     add(clearButton);
     add(colorButton);
     treeButton.addActionListener(this);
-    sidewalkButton.addActionListener(this);
+    waterButton.addActionListener(this);
     buildingButton.addActionListener(this);
     houseButton.addActionListener(this);
     roadButton.addActionListener(this);
@@ -79,7 +79,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
           else if(create.equalsIgnoreCase("house")) {
             repaint();
           }
-          else if(create.equalsIgnoreCase("sidewalk")) {
+          else if(create.equalsIgnoreCase("water")) {
             repaint();
           }
           else if(create.equalsIgnoreCase("bench")) {
@@ -99,9 +99,9 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       System.out.println("tree button pressed");
       create = "tree";
     }
-    else if(source == sidewalkButton) {
-      System.out.println("sidewalk button pressed");
-      create = "sidewalk";
+    else if(source == waterButton) {
+      System.out.println("water button pressed");
+      create = "water";
     }
     else if(source == buildingButton) {
       System.out.println("building button pressed");
@@ -132,7 +132,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   }
 
   public void paintComponent(Graphics g) {
-    System.out.println("start printComponent");
     int y=cellSize;
     while(y<=fHeight*cellSize) {
       g.setColor(Color.gray);
@@ -144,7 +143,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       g.drawLine(x,0,x,fHeight*cellSize);
       x += cellSize;
     }
-    System.out.println("end printComponent");
 
     //paint objects in ArrayList builtObject;
     Graphics2D g2 = (Graphics2D) g;
@@ -181,11 +179,12 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
         g2.setPaint(Color.black);
         //g2.fill(new Line2D.Double(x*cellSize,y*cellSize, 100,100));
       }
-      else if(object.getType().equalsIgnoreCase("sidewalk")) {
-      
+      else if(object.getType().equalsIgnoreCase("water")) {
+        g2.setPaint(Color.blue);
+        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize, cellSize));
       }
       else if(object.getType().equalsIgnoreCase("bench")) {
-
+        
       }
     }
   } 
