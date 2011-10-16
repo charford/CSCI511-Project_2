@@ -12,6 +12,7 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import javax.swing.JColorChooser;
 
 class SiteDiagramGUI extends JPanel implements ActionListener {
@@ -29,8 +30,10 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private static SiteElement buildObject;
   private static BufferedImage image;
   private Color curColor;
+  private int[][] buildTracker;   //track the objects painted, and will be used to repaint objects
   
   public SiteDiagramGUI() {
+    buildTracker = new int[7][4];
     curColor = Color.white;
     add(treeButton);
     add(sidewalkButton);
@@ -63,9 +66,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
           if(create.equalsIgnoreCase("road")) {
             g2.setPaint(Color.gray);
             g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize, cellSize));
-            //g2.fill(new Rectangle2D(x*cellSize,y*cellSize,cellSize,cellSize));
-            //g.drawOval(x*cellSize,y*cellSize,cellSize,cellSize);
-            //g.fill(g.drawRect(x*cellSize,y*cellSize,cellSize,cellSize));
             System.out.println("paint road");
           }
           else if(create.equalsIgnoreCase("tree")) {
@@ -85,8 +85,11 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
             g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*2));
           }
           else if(create.equalsIgnoreCase("house")) {
-            g2.setPaint(Color.orange);
+            g2.setPaint(curColor);
             g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*2, cellSize*2));
+            g2.setPaint(Color.black);
+            g2.fill(new Line2D.Double(x*cellSize,y*cellSize, 100,100));
+            
           }
         }
         else System.out.println("error paint");
