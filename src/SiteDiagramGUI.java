@@ -8,6 +8,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
 
@@ -92,11 +94,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
           else if(create.equalsIgnoreCase("house")) {
             g2.setPaint(Color.orange);
             g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*2, cellSize*2));
-            
-            
           }
-          //g.setColor(Color.black);
-          //g.drawOval(x*cellSize,y*cellSize,100,100);
         }
         else System.out.println("error paint");
       }
@@ -142,20 +140,17 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
 
   public void paintComponent(Graphics g) {
     System.out.println("start printComponent");
-  
     int y=cellSize;
     while(y<=fHeight*cellSize) {
       g.setColor(Color.gray);
       g.drawLine(0,y,fWidth*cellSize,y);
       y += cellSize;
     }
-
     int x=cellSize;
     while(x<=fWidth*cellSize) {
       g.drawLine(x,0,x,fHeight*cellSize);
       x += cellSize;
     }
-  
     System.out.println("end printComponent");
   } 
 
@@ -168,9 +163,14 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     System.out.println("SiteDiagramGUI");
     f = new JFrame("SiteDiagramGUI");
     f.add(new SiteDiagramGUI());
+    WindowListener listener = new WindowAdapter() {
+      public void windowClosing(WindowEvent e) {
+        System.exit(0);  
+      }
+    };
+    f.addWindowListener(listener);
     f.setSize(fWidth*cellSize,(fHeight*cellSize));
     f.setVisible(true);
     
   }
- 
 };
