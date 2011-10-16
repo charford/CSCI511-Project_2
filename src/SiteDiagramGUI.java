@@ -87,7 +87,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
           }
           else if(create.equalsIgnoreCase("building")) {
             g2.setPaint(Color.red);
-            g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*3));
+            g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*2));
           }
           else if(create.equalsIgnoreCase("house")) {
             g2.setPaint(Color.orange);
@@ -135,6 +135,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     }
     if(source == clearButton) {
       System.out.println("clear button pressed");
+      buildObject = new SiteElement();
       repaint();
     }
   }

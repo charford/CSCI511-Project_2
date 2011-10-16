@@ -8,7 +8,8 @@
  */
 public class SiteElement {
   int buildSpace[][];
-  static int buildSizes[];
+  static int buildSizes_x[];
+  static int buildSizes_y[];
   static String buildObjects[];
   int size_x;
   int size_y;
@@ -35,14 +36,28 @@ public class SiteElement {
       buildObjects[4] = "House";
       buildObjects[5] = "Building";
       buildObjects[6] = "Sidwalk";
-    buildSizes = new int[7];
-      buildSizes[0] = 0;
-      buildSizes[1] = 1;
-      buildSizes[2] = 1;
-      buildSizes[3] = 1;  //road
-      buildSizes[4] = 2;
-      buildSizes[5] = 3;  //building
-      buildSizes[6] = 1;
+    buildSizes_x = new int[7];
+    buildSizes_y = new int[7];
+      buildSizes_x[0] = 0;
+      buildSizes_y[0] = 0;
+
+      buildSizes_x[1] = 1;
+      buildSizes_y[1] = 1;
+
+      buildSizes_x[2] = 1;
+      buildSizes_y[2] = 1;
+   
+      buildSizes_x[3] = 1;  //road
+      buildSizes_y[3] = 1;  //road
+    
+      buildSizes_x[4] = 2;
+      buildSizes_y[4] = 2;
+
+      buildSizes_x[5] = 3;  //building
+      buildSizes_y[5] = 2;  //building
+
+      buildSizes_x[6] = 1;
+      buildSizes_y[6] = 1;
   }
     
     
@@ -146,16 +161,17 @@ public class SiteElement {
    *  method for trackObjects, used to track objects in the buildSpace
   */
   private boolean trackObjects(int type,int loc_x,int loc_y,String color) {
-    int size = buildSizes[type];
+    int create_size_x = buildSizes_x[type];
+    int create_size_y = buildSizes_y[type];
     boolean spaceAvailable = true;
-    if( ( (loc_x+size)>size_x ) | ( (loc_y+size)>size_y ) ) {
+    if( ( (loc_x+create_size_x)>size_x ) | ( (loc_y+create_size_y)>size_y ) ) {
       System.out.println("Error, outside of buildSpace " + loc_x + ", " + loc_y);
       return false;
     }
 
     /** checking if space is available in buildSpace */
-    for(int cord_y=loc_y; cord_y<size+loc_y; cord_y++) {
-      for(int cord_x=loc_x; cord_x<size+loc_x; cord_x++) {
+    for(int cord_y=loc_y; cord_y<create_size_y+loc_y; cord_y++) {
+      for(int cord_x=loc_x; cord_x<create_size_x+loc_x; cord_x++) {
         if(buildSpace[cord_x][cord_y]==0) {
           //System.out.println("Setting buildSpace at " + cord_x + ", " + cord_y + " to " + "type: " + type);
         }
@@ -167,8 +183,8 @@ public class SiteElement {
     }
     /** if spaceAvailable then go ahead and build it */
     if(spaceAvailable) {
-      for(int cord_y=loc_y; cord_y<size+loc_y; cord_y++) {
-        for(int cord_x=loc_x; cord_x<size+loc_x; cord_x++) {
+      for(int cord_y=loc_y; cord_y<create_size_y+loc_y; cord_y++) {
+        for(int cord_x=loc_x; cord_x<create_size_x+loc_x; cord_x++) {
           buildSpace[cord_x][cord_y]=type;
           //System.out.println("buildSpace recorded for type " + type + " at location " + cord_x + ", " + cord_y);
         }
