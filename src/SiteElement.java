@@ -1,4 +1,5 @@
- /**
+import java.util.ArrayList; 
+/**
   * class for SiteElement
   * @author Casey Harford
   * @version 1.0
@@ -7,19 +8,20 @@
   * @param size_y       defines the size of y axis for buildSpace
  */
 public class SiteElement {
-  int buildSpace[][];
-  static int buildSizes_x[];
-  static int buildSizes_y[];
-  static String buildObjects[];
-  int size_x;
-  int size_y;
-
+  private ArrayList<alreadyBuilt> builtAlready;
+  private int buildSpace[][];
+  private static int buildSizes_x[];
+  private static int buildSizes_y[];
+  private static String buildObjects[];
+  private int size_x;
+  private int size_y;
   /**
    *  constructor for SiteElement
   */
   public SiteElement () {
     size_x = 18;
     size_y = 18;
+    builtAlready = new ArrayList<alreadyBuilt>();
     /**
      *  Creating the build space. Size is based on parameters given
     */
@@ -60,7 +62,9 @@ public class SiteElement {
       buildSizes_y[6] = 1;
   }
     
-    
+  public ArrayList<alreadyBuilt> getList() {
+    return builtAlready;
+  }
   
    /**
     * method for createObject
@@ -73,6 +77,7 @@ public class SiteElement {
     if(type.equalsIgnoreCase("tree")) {
       if(trackObjects(1,loc_x,loc_y,color)) {
         ElementTree.cloneMe(loc_x,loc_y,color);
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y));
         return true;
       }
     }
@@ -192,4 +197,27 @@ public class SiteElement {
     }  
     return spaceAvailable;
   }
+  
+  static class alreadyBuilt {
+    private String create;
+    private int x;
+    private int y;
+  
+    alreadyBuilt(String createThis,int x_cord,int y_cord) {
+      create = createThis;
+      x = x_cord;
+      y = y_cord;
+      System.out.println("added " + create + "at " + x + ", " + y + " to <builtAlready>");
+    }
+    public int getX() {
+      return x;
+    }
+    public int getY() {
+      return y;
+    }
+    public String getType() {
+      return create;
+    }
+  };
 };
+

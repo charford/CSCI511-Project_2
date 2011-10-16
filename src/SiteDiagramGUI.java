@@ -14,6 +14,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import javax.swing.JColorChooser;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 class SiteDiagramGUI extends JPanel implements ActionListener {
   public static JFrame f;
@@ -31,6 +34,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private static BufferedImage image;
   private Color curColor;
   private int[][] buildTracker;   //track the objects painted, and will be used to repaint objects
+  private static ArrayList<SiteElement.alreadyBuilt> builtObjects;
   
   public SiteDiagramGUI() {
     buildTracker = new int[7][4];
@@ -79,8 +83,11 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
             g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), y*cellSize, cellSize/2, cellSize/2));
             g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
             g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
+            
+            
           }
           else if(create.equalsIgnoreCase("building")) {
+            repaint();
             g2.setPaint(curColor);
             g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*2));
           }
@@ -93,6 +100,8 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
           }
         }
         else System.out.println("error paint");
+        builtObjects = buildObject.getList();
+        System.out.println("Size of builtObjects = " + builtObjects.size());
       }
     });
   }
@@ -148,6 +157,33 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       x += cellSize;
     }
     System.out.println("end printComponent");
+
+    //paint objects in ArrayList builtObject;
+    Graphics2D g2 = (Graphics2D) g;
+    builtObjects = buildObject.getList();
+    Iterator<SiteElement.alreadyBuilt> itr = builtObjects.iterator();
+    while(itr.hasNext()) {
+      SiteElement.alreadyBuilt object = itr.next();
+      x = object.getX();
+      y = object.getY();
+      if(object.getType().equalsIgnoreCase("road")) {
+        g2.setPaint(Color.gray);
+        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize, cellSize));
+        System.out.println("paint road");
+      }
+      else if(object.getType().equalsIgnoreCase("tree")) {
+        Color brown = new Color(156,93,82);
+        System.out.println(curColor);
+        g2.setPaint(brown);
+        g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/4), (y*cellSize)+(cellSize/4), cellSize/2, cellSize/2));
+        //draw the leaves
+        g2.setPaint(Color.green);
+        g2.fill(new Ellipse2D.Double(x*cellSize, y*cellSize, cellSize/2, cellSize/2));
+        g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), y*cellSize, cellSize/2, cellSize/2));
+        g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
+        g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
+      }
+    }
   } 
 
   public static void main (String [] args) {
@@ -155,6 +191,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     fWidth = 18;
     fHeight = 18;
     buildObject = new SiteElement();
+    builtObjects = buildObject.getList();
     cellSize = 35;
     System.out.println("SiteDiagramGUI");
     f = new JFrame("SiteDiagramGUI");
