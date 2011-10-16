@@ -19,9 +19,9 @@ public class SiteElement {
   /**
    *  constructor for SiteElement
   */
-  public SiteElement () {
-    size_x = 18;
-    size_y = 18;
+  public SiteElement (int width,int height) {
+    size_x = width;
+    size_y = height;
     builtAlready = new ArrayList<alreadyBuilt>();
     /**
      *  Creating the build space. Size is based on parameters given
@@ -74,40 +74,40 @@ public class SiteElement {
     * @param loc_y  gets the y coordinate to place object
     * @param color  gets the color to be used for the object 
    */
-  public boolean createObject(String type,int loc_x,int loc_y,Color color) {
+  public boolean createObject(String type,int loc_x,int loc_y,Color color,int size) {
     if(type.equalsIgnoreCase("tree")) {
-      if(trackObjects(1,loc_x,loc_y,color)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
+      if(trackObjects(1,loc_x,loc_y,color,size)) {
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("bench")) {
-      if(trackObjects(2,loc_x,loc_y,color)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
+      if(trackObjects(2,loc_x,loc_y,color,size)) {
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("road")) {
-      if(trackObjects(3,loc_x,loc_y,color)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
+      if(trackObjects(3,loc_x,loc_y,color,size)) {
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,1));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("house")) {
-      if(trackObjects(4,loc_x,loc_y,color)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
+      if(trackObjects(4,loc_x,loc_y,color,size)) {
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("building")) {
-      if(trackObjects(5,loc_x,loc_y,color)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
+      if(trackObjects(5,loc_x,loc_y,color,size)) {
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("water")) {
-      if(trackObjects(6,loc_x,loc_y,color)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color));
+      if(trackObjects(6,loc_x,loc_y,color,size)) {
+        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
         return true;
       }
     }
@@ -165,9 +165,9 @@ public class SiteElement {
   /**
    *  method for trackObjects, used to track objects in the buildSpace
   */
-  private boolean trackObjects(int type,int loc_x,int loc_y,Color color) {
-    int create_size_x = buildSizes_x[type];
-    int create_size_y = buildSizes_y[type];
+  private boolean trackObjects(int type,int loc_x,int loc_y,Color color,int size) {
+    int create_size_x = buildSizes_x[type]*size;
+    int create_size_y = buildSizes_y[type]*size;
     boolean spaceAvailable = true;
     if( ( (loc_x+create_size_x)>size_x ) | ( (loc_y+create_size_y)>size_y ) ) {
       System.out.println("Error, outside of buildSpace " + loc_x + ", " + loc_y);
@@ -202,11 +202,13 @@ public class SiteElement {
     private String create;
     private int x;
     private int y;
+    private int size;
     private Color color;
   
-    alreadyBuilt(String createThis,int x_cord,int y_cord, Color colorThis) {
+    alreadyBuilt(String createThis,int x_cord,int y_cord, Color colorThis, int sizeThis) {
       create = createThis;
       color = colorThis;
+      size = sizeThis;
       x = x_cord;
       y = y_cord;
       System.out.println("added " + create + "at " + x + ", " + y + " to <builtAlready>");
@@ -222,6 +224,9 @@ public class SiteElement {
     }
     public Color getColor() {
       return color;
+    }
+    public int getSize() {
+      return size;
     }
   };
 };

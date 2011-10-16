@@ -29,12 +29,17 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton benchButton = new JButton("Bench");
   private JButton clearButton = new JButton("Clear");
   private JButton colorButton = new JButton("Color");
+  private JButton smallButton = new JButton("S");
+  private JButton medButton = new JButton("M");
+  private JButton largeButton = new JButton("L");
   private static int fWidth,fHeight,cellSize;
   private static SiteElement buildObject;
   private static BufferedImage image;
   private Color curColor;
   private int[][] buildTracker;   //track the objects painted, and will be used to repaint objects
   private static ArrayList<SiteElement.alreadyBuilt> builtObjects;
+  private static int curSize;
+  private static Object[] sizes = {"s","m","l"};  //small,medium,large
   
   public SiteDiagramGUI() {
     buildTracker = new int[7][4];
@@ -47,6 +52,9 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     add(benchButton);
     add(clearButton);
     add(colorButton);
+    add(smallButton);
+    add(medButton);
+    add(largeButton);
     treeButton.addActionListener(this);
     waterButton.addActionListener(this);
     buildingButton.addActionListener(this);
@@ -55,6 +63,9 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     benchButton.addActionListener(this);
     clearButton.addActionListener(this);
     colorButton.addActionListener(this);
+    smallButton.addActionListener(this);
+    medButton.addActionListener(this);
+    largeButton.addActionListener(this);
     
     addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent e) {
@@ -64,9 +75,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
         int y = e.getY() / cellSize;
         System.out.println("mouse clicked " + x + ", " + y + "object to create = " + create);
         System.out.println("create = " + create);
-        if(buildObject.createObject(create,x,y,curColor)) {
-          Graphics g = getGraphics();
-          Graphics2D g2 = (Graphics2D) g;
+        if(buildObject.createObject(create,x,y,curColor,curSize)) {
           if(create.equalsIgnoreCase("road")) {
             repaint();
           }
@@ -121,7 +130,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     }
     if(source == clearButton) {
       System.out.println("clear button pressed");
-      buildObject = new SiteElement();
+      buildObject = new SiteElement(fWidth,fHeight);
       repaint();
     }
     if(source == colorButton) {
@@ -129,10 +138,23 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       System.out.println("Changed color to: " + curColor);
       repaint();
     }
+    if(source == smallButton) {
+      System.out.println("Small button clicked");
+      curSize = 1;
+    }
+    if(source == medButton) {
+      System.out.println("Med button clicked");
+      curSize = 2;
+    }
+    if(source == largeButton) {
+      System.out.println("Large button clicked");
+      curSize = 3;
+    }
   }
 
   public void paintComponent(Graphics g) {
     int y=cellSize;
+    int objectSize;
     while(y<=fHeight*cellSize) {
       g.setColor(Color.gray);
       g.drawLine(0,y,fWidth*cellSize,y);
@@ -150,6 +172,8 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     Iterator<SiteElement.alreadyBuilt> itr = builtObjects.iterator();
     while(itr.hasNext()) {
       SiteElement.alreadyBuilt object = itr.next();
+      objectSize = object.getSize();
+      objectSize = objectSize*cellSize;
       x = object.getX();
       y = object.getY();
       if(object.getType().equalsIgnoreCase("road")) {
@@ -159,29 +183,28 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       }
       else if(object.getType().equalsIgnoreCase("tree")) {
         Color brown = new Color(156,93,82);
-        System.out.println(curColor);
         g2.setPaint(brown);
-        g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/4), (y*cellSize)+(cellSize/4), cellSize/2, cellSize/2));
+        g2.fill(new Ellipse2D.Double((x*cellSize)+(objectSize/4), (y*cellSize)+(objectSize/4), objectSize/2, objectSize/2));
         //draw the leaves
         g2.setPaint(Color.green);
-        g2.fill(new Ellipse2D.Double(x*cellSize, y*cellSize, cellSize/2, cellSize/2));
-        g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), y*cellSize, cellSize/2, cellSize/2));
-        g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
-        g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
+        g2.fill(new Ellipse2D.Double(x*cellSize, y*cellSize, objectSize/2, objectSize/2));
+        g2.fill(new Ellipse2D.Double((x*cellSize)+(objectSize/2), y*cellSize, objectSize/2, objectSize/2));
+        g2.fill(new Ellipse2D.Double((x*cellSize)+(objectSize/2), (y*cellSize)+(objectSize/2), objectSize/2, objectSize/2));
+        g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(objectSize/2), objectSize/2, objectSize/2));
       }
       else if(object.getType().equalsIgnoreCase("building")) {
         g2.setPaint(object.getColor());
-        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*2));
+        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize*3, objectSize*2));
       }
       else if(object.getType().equalsIgnoreCase("house")) {
         g2.setPaint(object.getColor());
-        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*2, cellSize*2));
+        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize*2, objectSize*2));
         g2.setPaint(Color.black);
         //g2.fill(new Line2D.Double(x*cellSize,y*cellSize, 100,100));
       }
       else if(object.getType().equalsIgnoreCase("water")) {
         g2.setPaint(Color.blue);
-        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize, cellSize));
+        g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize, objectSize));
       }
       else if(object.getType().equalsIgnoreCase("bench")) {
         
@@ -191,9 +214,10 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
 
   public static void main (String [] args) {
     create = "undefined";
-    fWidth = 18;
+    curSize = 1;
+    fWidth = 24;
     fHeight = 18;
-    buildObject = new SiteElement();
+    buildObject = new SiteElement(fWidth,fHeight);
     builtObjects = buildObject.getList();
     cellSize = 35;
     System.out.println("SiteDiagramGUI");
