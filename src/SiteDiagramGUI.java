@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Ellipse2D;
 
 class SiteDiagramGUI extends JPanel implements ActionListener {
   public static JFrame f;
@@ -19,6 +20,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton houseButton = new JButton("House");
   private JButton roadButton = new JButton("Road");
   private JButton benchButton = new JButton("Bench");
+  private JButton clearButton = new JButton("Clear");
   private static int fWidth,fHeight,cellSize;
   private static SiteElement buildObject;
   private static BufferedImage image;
@@ -32,12 +34,14 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     add(houseButton);
     add(roadButton);
     add(benchButton);
+    add(clearButton);
     treeButton.addActionListener(this);
     sidewalkButton.addActionListener(this);
     buildingButton.addActionListener(this);
     houseButton.addActionListener(this);
     roadButton.addActionListener(this);
     benchButton.addActionListener(this);
+    clearButton.addActionListener(this);
     
     
     
@@ -51,9 +55,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     */
     
     addMouseListener(new MouseAdapter() {
-      public void mousePressed(MouseEvent e) {
-        System.out.println("mouse pressed");
-      }
       public void mouseClicked(MouseEvent e) {
         
         //System.out.println("mouse pressed " + e.getX() + ", " + e.getY());
@@ -71,6 +72,28 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
             //g.drawOval(x*cellSize,y*cellSize,cellSize,cellSize);
             //g.fill(g.drawRect(x*cellSize,y*cellSize,cellSize,cellSize));
             System.out.println("paint road");
+          }
+          else if(create.equalsIgnoreCase("tree")) {
+            Color brown = new Color(156,93,82);
+            //draw stump
+            g2.setPaint(brown);
+            g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/4), (y*cellSize)+(cellSize/4), cellSize/2, cellSize/2));
+            //draw the leaves
+            g2.setPaint(Color.green);
+            g2.fill(new Ellipse2D.Double(x*cellSize, y*cellSize, cellSize/2, cellSize/2));
+            g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), y*cellSize, cellSize/2, cellSize/2));
+            g2.fill(new Ellipse2D.Double((x*cellSize)+(cellSize/2), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
+            g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(cellSize/2), cellSize/2, cellSize/2));
+          }
+          else if(create.equalsIgnoreCase("building")) {
+            g2.setPaint(Color.red);
+            g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*3, cellSize*3));
+          }
+          else if(create.equalsIgnoreCase("house")) {
+            g2.setPaint(Color.orange);
+            g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize*2, cellSize*2));
+            
+            
           }
           //g.setColor(Color.black);
           //g.drawOval(x*cellSize,y*cellSize,100,100);
@@ -94,8 +117,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     else if(source == buildingButton) {
       System.out.println("building button pressed");
       create = "building";
-      
-
     }
     if(source == houseButton) {
       System.out.println("house button pressed");
@@ -111,6 +132,10 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     if(source == benchButton) {
       System.out.println("bench button pressed");
       create = "bench";
+    }
+    if(source == clearButton) {
+      System.out.println("clear button pressed");
+      repaint();
     }
   }
 

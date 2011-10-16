@@ -41,7 +41,7 @@ public class SiteElement {
       buildSizes[2] = 1;
       buildSizes[3] = 1;  //road
       buildSizes[4] = 2;
-      buildSizes[5] = 4;
+      buildSizes[5] = 3;  //building
       buildSizes[6] = 1;
   }
     
