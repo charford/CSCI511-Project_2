@@ -211,33 +211,35 @@ public class SiteElement {
   */
   public void undo() {
     
+    /** check if item's exist in builtAlready */
     if(builtAlready.size()>0) {
-    /** the y coordinate of object */
-    int y = builtAlready.get(builtAlready.size()-1).getY();
 
-    /** the x coordinate of object */
-    int x = builtAlready.get(builtAlready.size()-1).getX();
+      /** the y coordinate of object */
+      int y = builtAlready.get(builtAlready.size()-1).getY();
 
-    /** the size of object */
-    int size = builtAlready.get(builtAlready.size()-1).getSize();
+      /** the x coordinate of object */
+      int x = builtAlready.get(builtAlready.size()-1).getX();
 
-    /** get the intType of object*/
-    int intType = builtAlready.get(builtAlready.size()-1).getIntType();
+      /** the size of object */
+      int size = builtAlready.get(builtAlready.size()-1).getSize();
 
-    /** width of object */
-    int width = buildSizes_x[intType]*size;
+      /** get the intType of object*/
+      int intType = builtAlready.get(builtAlready.size()-1).getIntType();
 
-    /** height of object */
-    int height = buildSizes_y[intType]*size;
+      /** width of object */
+      int width = buildSizes_x[intType]*size;
+
+      /** height of object */
+      int height = buildSizes_y[intType]*size;
     
-    /** reset buildSpace coordinates to 0 where object once existed */
-    for(int i=y; i<(y+height); i++) {
-      for(int j=x; j<(x+width); j++) {
-        buildSpace[j][i]=0;
+      /** reset buildSpace coordinates to 0 where object once existed */
+      for(int i=y; i<(y+height); i++) {
+        for(int j=x; j<(x+width); j++) {
+          buildSpace[j][i]=0;
+        }
       }
-    }
     
-    /** remove last item from list of objects built */
+      /** remove last item from list of objects built */
       builtAlready.remove(builtAlready.size()-1);
     }
   }
