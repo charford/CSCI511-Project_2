@@ -171,14 +171,23 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
    *  @param g Graphics object to paint with
   */
   public void paintComponent(Graphics g) {
-
+    
+    /** size of object that is being painted */
     int objectSize;
+
+    /** cell size of build space */
     int y=cellSize;
+
+    /** cell size of build space */
     int x=cellSize;
+
     Graphics2D g2 = (Graphics2D) g;
     builtObjects = buildObject.getList();
     Iterator<SiteElement.alreadyBuilt> itr = builtObjects.iterator();
-  
+    
+    g2.setPaint(Color.white);
+    g2.fill(new Rectangle2D.Double(0,0,1000,1000)); 
+
     /** draw horizontal graph lines */
     while(y<=fHeight*cellSize) {
       g.setColor(Color.gray);
@@ -206,7 +215,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
       if(object.getType().equalsIgnoreCase("road")) {
         g2.setPaint(Color.gray);
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize, cellSize));
-        System.out.println("paint road");
       }
       else if(object.getType().equalsIgnoreCase("tree")) {
         
