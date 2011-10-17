@@ -24,7 +24,6 @@ public class SiteElement {
 
   /** store the names of each object */
   private static String buildObjects[];
-  private static ArrayList<String> objectNames;
 
   /** width of object */
   private int size_x;
@@ -48,10 +47,10 @@ public class SiteElement {
 
     /** initialize build space based on size x and y */
     buildSpace = new int[size_x][size_y];
-
     
     /** storing names of each object */
     buildObjects = new String[7];
+
       buildObjects[0] = "Empty";
       buildObjects[1] = "Tree";
       buildObjects[2] = "Grass";
@@ -59,18 +58,10 @@ public class SiteElement {
       buildObjects[4] = "House";
       buildObjects[5] = "Building";
       buildObjects[6] = "Water";
-    objectNames = new ArrayList<String>();
-    objectNames.add("Empty");
-    objectNames.add("Tree");
-    objectNames.add("Grass");
-    objectNames.add("Road");
-    objectNames.add("House");
-    objectNames.add("Building");
-    objectNames.add("Water");
       
-      /** initialize array of sizes for objects, both width and height */
-      buildSizes_x = new int[7];
-      buildSizes_y = new int[7];
+    /** initialize array of sizes for objects, both width and height */
+    buildSizes_x = new int[7];
+    buildSizes_y = new int[7];
     
       buildSizes_x[0] = 0;  //nothing
       buildSizes_y[0] = 0;  //nothing
