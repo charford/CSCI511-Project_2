@@ -211,6 +211,7 @@ public class SiteElement {
   */
   public void undo() {
     
+    if(builtAlready.size()>0) {
     /** the y coordinate of object */
     int y = builtAlready.get(builtAlready.size()-1).getY();
 
@@ -235,9 +236,10 @@ public class SiteElement {
         buildSpace[j][i]=0;
       }
     }
-
+    
     /** remove last item from list of objects built */
-    builtAlready.remove(builtAlready.size()-1);
+      builtAlready.remove(builtAlready.size()-1);
+    }
   }
 
   /**
