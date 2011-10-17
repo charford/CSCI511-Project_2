@@ -21,24 +21,58 @@ import java.util.Iterator;
 */
 class SiteDiagramGUI extends JPanel implements ActionListener {
 
+  /** main frame to be used for user gui */
   public static JFrame f;
-
+  
+  /** button to make tree objects */
   private JButton treeButton = new JButton("Tree");
+
+  /** button to make water objects */
   private JButton waterButton = new JButton("Water");
+
+  /** button to make building objects */
   private JButton buildingButton = new JButton("Building");
+
+  /** button to make house objects */
   private JButton houseButton = new JButton("House");
+
+  /** button to make road objects */
   private JButton roadButton = new JButton("Road");
+
+  /** button to make grass objects */
   private JButton grassButton = new JButton("Grass");
+
+  /** button to clear build space */
   private JButton clearButton = new JButton("Clear");
+
+  /** button to change current color */
   private JButton colorButton = new JButton("Color");
+
+  /** button to change current size to small */
   private JButton smallButton = new JButton("S");
+
+  /** button to change current size to medium */
   private JButton medButton = new JButton("M");
+
+  /** button to change current size to large */
   private JButton largeButton = new JButton("L");
 
-  private static int fWidth,fHeight,cellSize,curSize;
+  /** dimensions for build space */
+  private static int fWidth,fHeight,cellSize;
+  
+  /** current size to build with */
+  private static int curSize;
+
+  /** object to store build space */
   private static SiteElement buildObject;
+
+  /** current color to build with */
   private static Color curColor;
+
+  /** current object selected to build */
   private static String create;
+
+  /** list of current objects already on map */
   private static ArrayList<SiteElement.alreadyBuilt> builtObjects;
   
   /**
@@ -46,7 +80,6 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
    *  sets the current color(default) to white, 
    *  then instantiates the buttons, and adds listeners to them
    *  mouse listeners are also setup in this method.
-   *  
   */
   public SiteDiagramGUI() {
 
