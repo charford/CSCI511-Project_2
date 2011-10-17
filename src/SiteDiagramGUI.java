@@ -57,6 +57,9 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   /** button to change current size to large */
   private JButton largeButton = new JButton("L");
 
+  /** button to undo last object built */
+  private JButton undoButton = new JButton("Undo");
+
   /** dimensions for build space */
   private static int fWidth,fHeight,cellSize;
   
@@ -95,6 +98,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     add(smallButton);
     add(medButton);
     add(largeButton);
+    add(undoButton);
     treeButton.addActionListener(this);
     waterButton.addActionListener(this);
     buildingButton.addActionListener(this);
@@ -106,6 +110,7 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     smallButton.addActionListener(this);
     medButton.addActionListener(this);
     largeButton.addActionListener(this);
+    undoButton.addActionListener(this);
     
     /** creating a new mouseAdapter to handle the mouse event of clicking */
     addMouseListener(new MouseAdapter() {
@@ -164,6 +169,11 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     if(source == smallButton) curSize = 1;
     if(source == medButton) curSize = 2;
     if(source == largeButton) curSize = 3;
+
+    if(source == undoButton) { 
+      buildObject.undo(); 
+      repaint();
+    }
   }
   
   /**

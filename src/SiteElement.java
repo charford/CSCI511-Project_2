@@ -24,6 +24,7 @@ public class SiteElement {
 
   /** store the names of each object */
   private static String buildObjects[];
+  private static ArrayList<String> objectNames;
 
   /** width of object */
   private int size_x;
@@ -58,7 +59,15 @@ public class SiteElement {
       buildObjects[4] = "House";
       buildObjects[5] = "Building";
       buildObjects[6] = "Water";
-    
+    objectNames = new ArrayList<String>();
+    objectNames.add("Empty");
+    objectNames.add("Tree");
+    objectNames.add("Grass");
+    objectNames.add("Road");
+    objectNames.add("House");
+    objectNames.add("Building");
+    objectNames.add("Water");
+      
       /** initialize array of sizes for objects, both width and height */
       buildSizes_x = new int[7];
       buildSizes_y = new int[7];
@@ -106,37 +115,37 @@ public class SiteElement {
     /** based on the type being created, check if it exists and can be built, if built return true */
     if(type.equalsIgnoreCase("tree")) {
       if(trackObjects(1,loc_x,loc_y,color,size)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
+        builtAlready.add(new alreadyBuilt(1,type,loc_x,loc_y,color,size));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("grass")) {
       if(trackObjects(2,loc_x,loc_y,color,size)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
+        builtAlready.add(new alreadyBuilt(2,type,loc_x,loc_y,color,size));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("road")) {
       if(trackObjects(3,loc_x,loc_y,color,1)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,1));
+        builtAlready.add(new alreadyBuilt(3,type,loc_x,loc_y,color,1));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("house")) {
       if(trackObjects(4,loc_x,loc_y,color,size)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
+        builtAlready.add(new alreadyBuilt(4,type,loc_x,loc_y,color,size));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("building")) {
       if(trackObjects(5,loc_x,loc_y,color,size)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
+        builtAlready.add(new alreadyBuilt(5,type,loc_x,loc_y,color,size));
         return true;
       }
     }
     else if(type.equalsIgnoreCase("water")) {
       if(trackObjects(6,loc_x,loc_y,color,size)) {
-        builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,size));
+        builtAlready.add(new alreadyBuilt(6,type,loc_x,loc_y,color,size));
         return true;
       }
     }
@@ -206,12 +215,38 @@ public class SiteElement {
     System.out.println("cleared build space");
   }
 
+  public void undo() {
+    
+    int y = builtAlready.get(builtAlready.size()-1).getY();
+    int x = builtAlready.get(builtAlready.size()-1).getX();
+    int size = builtAlready.get(builtAlready.size()-1).getSize();
+    int intType = builtAlready.get(builtAlready.size()-1).getIntType();
+    int width = buildSizes_x[intType]*size;
+    int height = buildSizes_y[intType]*size;
+    
+    System.out.println("reseting build space");
+    for(int i=y; i<(y+height); i++) {
+      for(int j=x; j<(x+width); j++) {
+        buildSpace[j][i]=0;
+        System.out.println("reset buildSpace " + j + ", " + i + " to 0");
+      }
+    }
+    System.out.println("type " + intType + " at " + x + ", " + y + " size " + size);
+    
+    
+    
+    builtAlready.remove(builtAlready.size()-1);
+    System.out.println("undo button pressed");
+  }
+
   /**
-   *  class for alreadyBuikt
+   *  class for alreadyBuilt
    *  used to store info about an object that has already been built
   */
   static class alreadyBuilt {
-
+    
+    /** */
+    private int intType;
     /** type of object to create */
     private String create;
 
@@ -227,6 +262,7 @@ public class SiteElement {
     /** color of object */
     private Color color;
 
+
     /**
      *  constructor for alreadyBuilt
      *  @param createThis   object to create
@@ -235,7 +271,8 @@ public class SiteElement {
      *  @param colorThis    color of object 
      *  @param sizeThis     size of object
     */
-    alreadyBuilt(String createThis,int x_cord,int y_cord, Color colorThis, int sizeThis) {
+    alreadyBuilt(int type,String createThis,int x_cord,int y_cord, Color colorThis, int sizeThis) {
+      intType = type;
       create = createThis;
       color = colorThis;
       size = sizeThis;
@@ -281,6 +318,18 @@ public class SiteElement {
     */
     public int getSize() {
       return size;
+    }
+
+    public int getIntType() {
+      return intType;
+    }
+
+    public int getWidth() {
+      return buildSizes_x[intType];
+    }
+    
+    public int getHeight() {
+      return buildSizes_y[intType];
     }
   };
 };
