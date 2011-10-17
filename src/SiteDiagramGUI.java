@@ -1,9 +1,3 @@
-/**
- *  SiteDiagramGUI
- *  @author Casey Harford
- *  Last update 10-16-2011
- * 
-*/
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -22,32 +16,13 @@ import java.util.Iterator;
 /**
  *  class for SiteDiagramGUI
  *  @author Casey Harford
- *  @param f              main frame which is used to display everything
- *  @param create         variable used to store the current object type that is selected
- *  @param treeButton     the button used to build tree objects
- *  @param waterButton    the button used to build water objects
- *  @param buildingButton the button used to build building objects
- *  @param houseButton    the button used to build house objects
- *  @param roadButton     the button used to build road objects
- *  @param grassButton    the button used to build grass objects
- *  @param clearButton    the button used to clear the build space
- *  @param colorButton    the button used to select color to build with
- *  @param smallButton    the button used to build small objects
- *  @param medButton      the button used to build medium objects
- *  @param largeButton    the button used to build large objects
- *  @param fWidth         number of cells for width of build space
- *  @param fHeight        number of cells for height of build space
- *  @param cellSize       size to make each cell on build space
- *  @param buildObject    contains tracking of build space, where objects are, which ones have been made, etc.
- *  @param curColor       current color that is selected to build with
- *  @param builtObjects   used to store the list of objects built, and used when repainting
- *  @param curSize        current size to build objects
+ *  Last update 10-17-2011
  *
 */
 class SiteDiagramGUI extends JPanel implements ActionListener {
 
   public static JFrame f;
-  private static String create;
+
   private JButton treeButton = new JButton("Tree");
   private JButton waterButton = new JButton("Water");
   private JButton buildingButton = new JButton("Building");
@@ -59,11 +34,12 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private JButton smallButton = new JButton("S");
   private JButton medButton = new JButton("M");
   private JButton largeButton = new JButton("L");
-  private static int fWidth,fHeight,cellSize;
+
+  private static int fWidth,fHeight,cellSize,curSize;
   private static SiteElement buildObject;
-  private Color curColor;
+  private static Color curColor;
+  private static String create;
   private static ArrayList<SiteElement.alreadyBuilt> builtObjects;
-  private static int curSize;
   
   /**
    *  constructor for SiteDiagramGUI
@@ -103,11 +79,11 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
 
       /** 
        *  method for mouseClicked events 
-       *  @param x  coordinate on the x axis that was clicked
-       *  @param y  coordinate on the y axis that was clicked
+       *  @param e  the mouse event being clicked
       */
       public void mouseClicked(MouseEvent e) {
         
+        /** get the coordinates that were clicked, then convert it to the actual cell that the user clicked */
         int x = e.getX() / cellSize;
         int y = e.getY() / cellSize;
 
@@ -121,142 +97,180 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     });
   }
 
+  /**
+   *  method to handle button actions
+   *  @param e  the event being performed
+  */
   public void actionPerformed(ActionEvent e) {
+    
+    /** get the source button that was clicked */
     Object source = e.getSource();
-    if(source == treeButton) {
-      System.out.println("tree button pressed");
-      create = "tree";
-    }
-    else if(source == waterButton) {
-      System.out.println("water button pressed");
-      create = "water";
-    }
-    else if(source == buildingButton) {
-      System.out.println("building button pressed");
-      create = "building";
-    }
-    if(source == houseButton) {
-      System.out.println("house button pressed");
-      create = "house";
-    }
-    if(source == roadButton) {
-      System.out.println("road button pressed");
-      create = "road";
-    }
-    if(source == grassButton) {
-      System.out.println("grass button pressed");
-      create = "grass"; 
-    }
-    if(source == clearButton) {
-      System.out.println("clear button pressed");
+  
+    /** response to build object buttons */
+    if(source == treeButton) create = "tree";
+    else if(source == waterButton) create = "water";
+    else if(source == buildingButton) create = "building";
+    else if(source == houseButton) create = "house";
+    else if(source == roadButton) create = "road";
+    else if(source == grassButton) create = "grass"; 
+
+    /** response to clear button */
+    else if(source == clearButton) {
       buildObject.clear();
       builtObjects = buildObject.getList();
       repaint();
     }
+    
+    /** reponse to color selector button */
     if(source == colorButton) {
       curColor = JColorChooser.showDialog( SiteDiagramGUI.this, "Choose a color", curColor);
-      System.out.println("Changed color to: " + curColor);
       repaint();
     }
-    if(source == smallButton) {
-      System.out.println("Small button clicked");
-      curSize = 1;
-    }
-    if(source == medButton) {
-      System.out.println("Med button clicked");
-      curSize = 2;
-    }
-    if(source == largeButton) {
-      System.out.println("Large button clicked");
-      curSize = 3;
-    }
+    
+    /** response to size buttons */
+    if(source == smallButton) curSize = 1;
+    if(source == medButton) curSize = 2;
+    if(source == largeButton) curSize = 3;
   }
-
+  
+  /**
+   *  paint method used for SiteDiagramGUI
+   *  @param g Graphics object to paint with
+  */
   public void paintComponent(Graphics g) {
-    int y=cellSize;
+
     int objectSize;
+    int y=cellSize;
+    int x=cellSize;
+    Graphics2D g2 = (Graphics2D) g;
+    builtObjects = buildObject.getList();
+    Iterator<SiteElement.alreadyBuilt> itr = builtObjects.iterator();
+  
+    /** draw horizontal graph lines */
     while(y<=fHeight*cellSize) {
       g.setColor(Color.gray);
       g.drawLine(0,y,fWidth*cellSize,y);
       y += cellSize;
     }
-    int x=cellSize;
+
+    /** draw verticle graph lines */
     while(x<=fWidth*cellSize) {
       g.drawLine(x,0,x,fHeight*cellSize);
       x += cellSize;
     }
 
-    //paint objects in ArrayList builtObject;
-    Graphics2D g2 = (Graphics2D) g;
-    builtObjects = buildObject.getList();
-    Iterator<SiteElement.alreadyBuilt> itr = builtObjects.iterator();
+    /** paint objects in ArrayList builtObject */
     while(itr.hasNext()) {
+      
+      /** get object, and info about it */
       SiteElement.alreadyBuilt object = itr.next();
       objectSize = object.getSize();
       objectSize = objectSize*cellSize;
       x = object.getX();
       y = object.getY();
+
+      /** if the object is valid, paint it */
       if(object.getType().equalsIgnoreCase("road")) {
         g2.setPaint(Color.gray);
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, cellSize, cellSize));
         System.out.println("paint road");
       }
       else if(object.getType().equalsIgnoreCase("tree")) {
+        
+        /** this color can't be changed by user, tree trunks will always be brown */
         Color brown = new Color(156,93,82);
+        
+        /** a tree trunk */
         g2.setPaint(brown);
         g2.fill(new Ellipse2D.Double((x*cellSize)+(objectSize/4), (y*cellSize)+(objectSize/4), objectSize/2, objectSize/2));
-        //draw the leaves
+        
+        /** some leaves for the tree */
+
+        /** leaves will always be green */
         g2.setPaint(Color.green);
+
+        /** draw the leaves */
         g2.fill(new Ellipse2D.Double(x*cellSize, y*cellSize, objectSize/2, objectSize/2));
         g2.fill(new Ellipse2D.Double((x*cellSize)+(objectSize/2), y*cellSize, objectSize/2, objectSize/2));
         g2.fill(new Ellipse2D.Double((x*cellSize)+(objectSize/2), (y*cellSize)+(objectSize/2), objectSize/2, objectSize/2));
         g2.fill(new Ellipse2D.Double((x*cellSize), (y*cellSize)+(objectSize/2), objectSize/2, objectSize/2));
       }
       else if(object.getType().equalsIgnoreCase("building")) {
+        
+        /** get color of building */
         g2.setPaint(object.getColor());
+
+        /** draw the building */
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize*3, objectSize*2));
+    
+        /** this last part is the border for the building, and the small square thing on top */
         g.setColor(Color.black);
         g.drawRect(x*cellSize,y*cellSize,objectSize*3,objectSize*2);
         g.drawRect((x*cellSize)+10,(y*cellSize)+10,(objectSize*3)-20,(objectSize*2)-20);
       }
       else if(object.getType().equalsIgnoreCase("house")) {
+        
+        /** get color of house */
         g2.setPaint(object.getColor());
+
+        /** draw the house */
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize*2, objectSize*2));
         g.setColor(Color.black);
-        //g.drawRect(x*cellSize,y*cellSize,objectSize*3,objectSize*2);
-        //chimney
+        
+        /** chimney */
         g.drawRect((x*cellSize)+(objectSize/4),(y*cellSize)+(objectSize/4),(objectSize/4)*3,(objectSize/4)*3);
       }
       else if(object.getType().equalsIgnoreCase("water")) {
+        
+        /** water will always be blue */
         g2.setPaint(Color.blue);
+
+        /** draw water */
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize, objectSize));
       }
       else if(object.getType().equalsIgnoreCase("grass")) {
+        
+        /** grass always this dark green color */
         g2.setPaint(new Color(0,153,0));
         g2.fill(new Rectangle2D.Double(x*cellSize, y*cellSize, objectSize, objectSize));
       }
     }
   } 
-
+  
+  /**
+   *  method for main program operation
+   *  @param args   not used in this implementation
+  */
   public static void main (String [] args) {
+    /** set default values for object and size */
     create = "undefined";
     curSize = 1;
+
+    /** set dimensions for site diagram */
     fWidth = 24;
     fHeight = 18;
-    buildObject = new SiteElement(fWidth,fHeight);
-    builtObjects = buildObject.getList();
     cellSize = 35;
-    System.out.println("SiteDiagramGUI");
+
+    /** create the build object */
+    buildObject = new SiteElement(fWidth,fHeight);
+
+    /** get inital values for builtObjects */
+    builtObjects = buildObject.getList();
+  
+    /** create the frame to draw stuff */
     f = new JFrame("SiteDiagramGUI");
     f.add(new SiteDiagramGUI());
+
+    /** when user presses the x to close application, exit program without errors */
     WindowListener listener = new WindowAdapter() {
       public void windowClosing(WindowEvent e) {
         System.exit(0);  
       }
     };
     f.addWindowListener(listener);
+
+    /** set dimensions of window, then make visible */
     f.setSize(fWidth*cellSize,(fHeight*cellSize));
     f.setVisible(true);
-    
   }
 };

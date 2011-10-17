@@ -88,7 +88,7 @@ public class SiteElement {
       }
     }
     else if(type.equalsIgnoreCase("road")) {
-      if(trackObjects(3,loc_x,loc_y,color,size)) {
+      if(trackObjects(3,loc_x,loc_y,color,1)) {
         builtAlready.add(new alreadyBuilt(type,loc_x,loc_y,color,1));
         return true;
       }
