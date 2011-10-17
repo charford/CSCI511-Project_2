@@ -214,29 +214,39 @@ public class SiteElement {
     buildSpace = new int[size_x][size_y];
     System.out.println("cleared build space");
   }
-
+  
+  /**
+   *  method for undo, deletes the last object built
+  */
   public void undo() {
     
+    /** the y coordinate of object */
     int y = builtAlready.get(builtAlready.size()-1).getY();
+
+    /** the x coordinate of object */
     int x = builtAlready.get(builtAlready.size()-1).getX();
+
+    /** the size of object */
     int size = builtAlready.get(builtAlready.size()-1).getSize();
+
+    /** get the intType of object*/
     int intType = builtAlready.get(builtAlready.size()-1).getIntType();
+
+    /** width of object */
     int width = buildSizes_x[intType]*size;
+
+    /** height of object */
     int height = buildSizes_y[intType]*size;
     
-    System.out.println("reseting build space");
+    /** reset buildSpace coordinates to 0 where object once existed */
     for(int i=y; i<(y+height); i++) {
       for(int j=x; j<(x+width); j++) {
         buildSpace[j][i]=0;
-        System.out.println("reset buildSpace " + j + ", " + i + " to 0");
       }
     }
-    System.out.println("type " + intType + " at " + x + ", " + y + " size " + size);
-    
-    
-    
+
+    /** remove last item from list of objects built */
     builtAlready.remove(builtAlready.size()-1);
-    System.out.println("undo button pressed");
   }
 
   /**
