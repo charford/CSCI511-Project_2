@@ -1,8 +1,11 @@
+/**
+ *  SiteDiagramGUI
+ *  @author Casey Harford
+ *  Last update 10-16-2011
+ * 
+*/
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
-import java.util.*;
-import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.MouseEvent;
@@ -12,12 +15,37 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import javax.swing.JColorChooser;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ *  class for SiteDiagramGUI
+ *  @author Casey Harford
+ *  @param f              main frame which is used to display everything
+ *  @param create         variable used to store the current object type that is selected
+ *  @param treeButton     the button used to build tree objects
+ *  @param waterButton    the button used to build water objects
+ *  @param buildingButton the button used to build building objects
+ *  @param houseButton    the button used to build house objects
+ *  @param roadButton     the button used to build road objects
+ *  @param grassButton    the button used to build grass objects
+ *  @param clearButton    the button used to clear the build space
+ *  @param colorButton    the button used to select color to build with
+ *  @param smallButton    the button used to build small objects
+ *  @param medButton      the button used to build medium objects
+ *  @param largeButton    the button used to build large objects
+ *  @param fWidth         number of cells for width of build space
+ *  @param fHeight        number of cells for height of build space
+ *  @param cellSize       size to make each cell on build space
+ *  @param buildObject    contains tracking of build space, where objects are, which ones have been made, etc.
+ *  @param curColor       current color that is selected to build with
+ *  @param builtObjects   used to store the list of objects built, and used when repainting
+ *  @param curSize        current size to build objects
+ *
+*/
 class SiteDiagramGUI extends JPanel implements ActionListener {
+
   public static JFrame f;
   private static String create;
   private JButton treeButton = new JButton("Tree");
@@ -34,13 +62,18 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   private static int fWidth,fHeight,cellSize;
   private static SiteElement buildObject;
   private Color curColor;
-  private int[][] buildTracker;   //track the objects painted, and will be used to repaint objects
   private static ArrayList<SiteElement.alreadyBuilt> builtObjects;
   private static int curSize;
-  private static Object[] sizes = {"s","m","l"};  //small,medium,large
   
+  /**
+   *  constructor for SiteDiagramGUI
+   *  sets the current color(default) to white, 
+   *  then instantiates the buttons, and adds listeners to them
+   *  mouse listeners are also setup in this method.
+   *  
+  */
   public SiteDiagramGUI() {
-    buildTracker = new int[7][4];
+
     curColor = Color.white;
     add(treeButton);
     add(waterButton);
@@ -65,37 +98,25 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
     medButton.addActionListener(this);
     largeButton.addActionListener(this);
     
+    /** creating a new mouseAdapter to handle the mouse event of clicking */
     addMouseListener(new MouseAdapter() {
+
+      /** 
+       *  method for mouseClicked events 
+       *  @param x  coordinate on the x axis that was clicked
+       *  @param y  coordinate on the y axis that was clicked
+      */
       public void mouseClicked(MouseEvent e) {
         
-        //System.out.println("mouse pressed " + e.getX() + ", " + e.getY());
         int x = e.getX() / cellSize;
         int y = e.getY() / cellSize;
-        System.out.println("mouse clicked " + x + ", " + y + "object to create = " + create);
-        System.out.println("create = " + create);
+
+        /** build object requested, if successful, repaint */
         if(buildObject.createObject(create,x,y,curColor,curSize)) {
-          if(create.equalsIgnoreCase("road")) {
-            repaint();
-          }
-          else if(create.equalsIgnoreCase("tree")) {
-            repaint();
-          }
-          else if(create.equalsIgnoreCase("building")) {
-            repaint();
-          }
-          else if(create.equalsIgnoreCase("house")) {
-            repaint();
-          }
-          else if(create.equalsIgnoreCase("water")) {
-            repaint();
-          }
-          else if(create.equalsIgnoreCase("grass")) {
-            repaint();
-          }
+          repaint();
         }
+        /** error, invalid object specified, no painting occured */
         else System.out.println("error paint");
-        builtObjects = buildObject.getList();
-        System.out.println("Size of builtObjects = " + builtObjects.size());
       }
     });
   }
