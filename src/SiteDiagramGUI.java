@@ -1,5 +1,10 @@
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.MouseEvent;
@@ -9,7 +14,6 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
-import javax.swing.JColorChooser;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -22,7 +26,7 @@ import java.util.Iterator;
 class SiteDiagramGUI extends JPanel implements ActionListener {
 
   /** main frame to be used for user gui */
-  public static JFrame f;
+  private static JFrame f;
   
   /** button to make tree objects */
   private JButton treeButton = new JButton("Tree");
@@ -86,7 +90,8 @@ class SiteDiagramGUI extends JPanel implements ActionListener {
   */
   public SiteDiagramGUI() {
 
-    curColor = Color.white;
+    //curColor = Color.blue;
+    curColor = new Color(204,255,204);
     add(treeButton);
     add(waterButton);
     add(buildingButton);

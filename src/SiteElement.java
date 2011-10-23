@@ -1,13 +1,13 @@
 import java.util.ArrayList;
-import java.awt.*;
+import java.awt.Color;
 /**
-  * class for SiteElement
-  * @author Casey Harford
-  * @version 2.0
-  * @param buildSpace   defines array for grid of objects
-  * @param size_x       defines the size of x axis for buildSpace
-  * @param size_y       defines the size of y axis for buildSpace
- */
+ * class for SiteElement
+ * @author Casey Harford
+ * @version 2.0
+ * @param buildSpace   defines array for grid of objects
+ * @param size_x       defines the size of x axis for buildSpace
+ * @param size_y       defines the size of y axis for buildSpace
+*/
 public class SiteElement {
 
   /** store objects already built */
@@ -250,7 +250,7 @@ public class SiteElement {
   */
   static class alreadyBuilt {
     
-    /** */
+    /** the type of object, only as a number index...used with buildSpace to track objects */
     private int intType;
     /** type of object to create */
     private String create;
@@ -325,14 +325,26 @@ public class SiteElement {
       return size;
     }
 
+    /** 
+     *  method for getIntType 
+     *  @return  the type of object, as an int index
+    */
     public int getIntType() {
       return intType;
     }
 
+    /** 
+     *  method for getSize 
+     *  @return  the width of the object 
+    */
     public int getWidth() {
       return buildSizes_x[intType];
     }
     
+    /** 
+     *  method for getHeight
+     *  @return  the height of the object
+    */
     public int getHeight() {
       return buildSizes_y[intType];
     }
