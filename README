@@ -1,4 +1,30 @@
 -------------------------------------------------------------------------------\
-SiteDeveloper                                                 By Casey Harford
+SiteDiagramGUI                                                 By Casey Harford
 -------------------------------------------------------------------------------
+  Overall, I felt this project went well. Although I ran into issues along the
+way, it all came together in the end. The parts that were easy, seemed to be
+the back end. The model, which tracks objects, the build space, etc. This is
+the part of the project which came easy for me.
 
+  The part of the project that caused the most difficulties came when it was 
+time to "paint" some objects. I was making a small problme, more complicated
+than it needed to be. I had already got it to the point where a user could
+click a space on the board, and return a set of coordinates to place the
+object. The problem was actually drawing the object, and keeping it on the
+game board.
+
+  The solution was using an arraylist of objects which tracked objects that
+had already been built. From there, I just added a loop in the paint method
+for SiteDiagramGUI, which checks the arraylist for objects already built. 
+Then, I used the repaint() method after each object was "built" to make it 
+appear on the game board.
+
+  The other major issue I had was meeting the requirement of having a 
+SiteDeveloper class, which instantiates SiteDiagramGUI. It just did not make
+sense to me, and I felt the way I did it made more sense, and functionally,
+worked fine. With any programming language, it seems there's always several
+ways to do something, with none of them necessarily being the "correct" or
+"better" way.
+
+  In the end, I learned a lot about Java, and also realized that I do not want
+to have a career programming Java. I'll stick with Ruby On Rails.
