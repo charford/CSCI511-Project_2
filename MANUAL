@@ -49,6 +49,11 @@ Sizes include
 To select a color, click the color button, which will dislplay a dialog with
 a selection of colors to choose from. Once you've selected a color, click Done.
 
+If you make a mistake, you can undo the last action performed, by pressing
+the Undo button.
+
+Use the Clear button to clear the diagram, and start over.
+
 -------------------------------------------------------------------------------\
 UML Diagram
 -------------------------------------------------------------------------------
