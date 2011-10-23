@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------\
-SiteDeveloper                                                 By Casey Harford
+SiteDiagramGUI                                                 By Casey Harford
 -------------------------------------------------------------------------------
-SiteDeveloper can be used to create a virtual world with buildings, sidewalks, 
+SiteDiagramGUI can be used to create a virtual world with buildings, sidewalks, 
 roads, and many other objects(see full list below).
 
 -------------------------------------------------------------------------------\
@@ -18,84 +18,38 @@ Both are available @  http://www.oracle.com
 -------------------------------------------------------------------------------\
 How to compile
 -------------------------------------------------------------------------------
-Navigate to the root of the project directory. Enter the following command:
+Navigate to the root of the project directory. Execute the following command:
 
   javac src/*.java -d bin/
 
 -------------------------------------------------------------------------------\
 How to use it
 -------------------------------------------------------------------------------
-create tree loc 3 4 color green
+Navigate to the bin directory, and excute the following command:
 
-The above command would create a tree at location x = 3, y = 4.
+  java SiteDiagramGUI
 
-p - prints the buildspace, along with current objects
-q - quits the program
+You will be presented with a graph, and buttons along the top. The first set
+of buttons contain objects that can be built, then you can select a color,
+and a size for the object using the next set of buttons.
 
-Multiple commands can be given, here are the list of available objects:
+Multiple objects can be built, here are the list of available objects:
 - tree
-- bench
+- grass
 - building
 - sidewalk
 - road
 - house
 
-Colors have not been configured yet, but will be implemented in the color,
-graphical version coming soon. For now, just put in a valid "string" such
-blue, or green, or yellow, or if you like, red.
+Sizes include
+- Small(Default)
+- Medium
+- Large
 
--------------------------------------------------------------------------------\
-Test Input/Output
--------------------------------------------------------------------------------
-To see some sample input/ouput, run the following commands, while in the 
-bin/ directory
-
-Example of good input:
-java SiteDeveloper < ../test_input
-
-Outputs: 
-
-* * * * * * * * * * * * * * * * * * * * * * * * * * * 
-* T R R T   B B B B   B B B B   B B B B   R R       *
-*   R R     B B B B   B B B B   B B B B   R R   H H *
-* T R R T   B B B B   B B B B   B B B B   R R   H H *
-*   R R     B B B B   B B B B   B B B B   R R       *
-* T R R T                                 R R   H H *
-*   R R     B B B B   B B B B   B B B B   R R   H H *
-* T R R T   B B B B   B B B B   B B B B   R R       *
-*   R R     B B B B   B B B B   B B B B   R R   H H *
-* T R R T   B B B B   B B B B   B B B B T R R   H H *
-*   R R   T                           T   R R       *
-* T R R R R R R R R R R R R R R R R R R R R R R R R *
-*   R R R R R R R R R R R R R R R R R R R R R R R R *
-* T                 R R                             *
-*         B B B B   R R   H H   H H   H H   H H T T *
-*         B B B B   R R   H H   H H   H H   H H T T *
-*         B B B B   R R                             *
-*         B B B B   R R     H H   H H   H H   H H   *
-*                   R R     H H   H H   H H   H H   *
-*         B B B B   R R                             *
-*         B B B B   R R R R R R R R R R R R R R R R *
-*         B B B B   R R R R R R R R R R R R R R R R *
-*         B B B B   R R                             *
-*                   R R     H H   H H   H H   H H   *
-*                   R R     H H   H H   H H   H H   *
-*                 T T T T                           *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * 
-
-Example of bad input:
-java SiteDeveloper < ../test_bad_input
-
-Outputs:
-
-Error, invalid argument for loc
-Invalid object specified
-Error, invalid command(expecting color)
-Error, outside of buildSpace 50, 50
-Error, outside of buildSpace 50, 10
-Error, outside of buildSpace 10, 50
+To select a color, click the color button, which will dislplay a dialog with
+a selection of colors to choose from. Once you've selected a color, click Done.
 
 -------------------------------------------------------------------------------\
 UML Diagram
 -------------------------------------------------------------------------------
-Please see UML.png for the UML diagram of SiteDeveloper.
+Please see UML.png for the UML diagram of SiteDiagramGUI.
